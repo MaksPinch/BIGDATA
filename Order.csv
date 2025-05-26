@@ -1,4 +1,4 @@
-orderid,orderdate,ordertype,customerid,staffid
+order_id,order_date,ordertype,customer_id,staff_id
 1,29/12/2024,Takeaway,1,1
 2,27/8/2025,Dine-in,2,2
 3,16/7/2025,Dine-in,3,3
