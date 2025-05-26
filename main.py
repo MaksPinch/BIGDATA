@@ -6,7 +6,7 @@ with psycopg2.connect(database="BIGdata", user="postgres", password="130006") as
     with conn.cursor() as cur:
         # удаление таблиц
         cur.execute("""
-        DROP TABLE customer;
+        DROP TABLE customer, staff;
         
         """)
 
@@ -21,7 +21,7 @@ with psycopg2.connect(database="BIGdata", user="postgres", password="130006") as
         conn.commit()
 
         with open(file_path_customer, 'r', encoding='utf-8') as f:
-            next(f)  # пропускаем заголовок CSV
+            next(f)
             cur.copy_from(f, 'customer', sep=',', columns=('customerid', 'name', 'phone', 'email'))
 
         conn.commit()
@@ -33,3 +33,26 @@ with psycopg2.connect(database="BIGdata", user="postgres", password="130006") as
         """)
         print(cur.fetchall())
 
+
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS staff (
+                staffid INT PRIMARY KEY,
+                name VARCHAR(100) NOT NULL,
+                role VARCHAR(100) NOT NULL,
+                phone VARCHAR(100) NOT NULL
+            );
+        """)
+
+        conn.commit()
+
+        with open('Staff.csv', 'r', encoding='utf-8') as f:
+            next(f)
+            cur.copy_from(f, 'staff', sep=',', columns=('staffid', 'name', 'role', 'phone'))
+
+        conn.commit()
+
+        cur.execute("""
+            SELECT * FROM staff;
+        """)
+
+        print(cur.fetchall())
