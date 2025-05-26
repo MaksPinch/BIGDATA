@@ -1,0 +1,51 @@
+menuitemid,itemname,price,category
+1,7UP,2,Beverage
+2,Fanta,5,Beverage
+3,Burger,12,Food
+4,Curry,6,Food
+5,Coca-Cola,1,Beverage
+6,Sprite,4,Beverage
+7,Pepsi,2,Beverage
+8,Pizza,10,Food
+9,Pasta,7,Food
+10,Mountain Dew,3,Beverage
+11,Dr Pepper,2,Beverage
+12,Diet Coke,2,Beverage
+13,Salad,13,Food
+14,Steak,12,Food
+15,Root Beer,5,Beverage
+16,Iced Tea,1,Beverage
+17,Lemonade,1,Beverage
+18,Orange Juice,4,Beverage
+19,Apple Juice,4,Beverage
+20,Ginger Ale,5,Beverage
+21,Tonic Water,4,Beverage
+22,Sparkling Water,4,Beverage
+23,Mineral Water,2,Beverage
+24,Coffee,1,Beverage
+25,Espresso,2,Beverage
+26,Fish & Chips,6,Food
+27,Americano,2,Beverage
+28,Latte,1,Beverage
+29,Tacos,14,Food
+30,Cappuccino,5,Beverage
+31,Mocha,2,Beverage
+32,Hot Chocolate,3,Beverage
+33,Sushi,13,Food
+34,Ramen,15,Food
+35,Sandwich,13,Food
+36,Green Tea,1,Beverage
+37,Black Tea,3,Beverage
+38,Herbal Tea,2,Beverage
+39,Smoothie,1,Beverage
+40,Nachos,12,Food
+41,Milkshake,4,Beverage
+42,Mango Lassi,4,Beverage
+43,Chai Latte,4,Beverage
+44,Frappuccino,1,Beverage
+45,Coconut Water,2,Beverage
+46,Fries,10,Food
+47,Energy Drink,4,Beverage
+48,Beer,1,Beverage
+49,Red Wine,2,Beverage
+50,White Wine,4,Beverage
