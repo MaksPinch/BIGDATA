@@ -1,0 +1,51 @@
+menuitemid,itemname,price,category
+1,7UP,2,Beverage
+2,Fanta,5,Beverage
+3,Burger,12,Food
+4,Curry,6,Food
+5,Fanta,1,Beverage
+6,Red Bull,4,Beverage
+7,7UP,2,Beverage
+8,Ramen,10,Food
+9,Burger,7,Food
+10,Fanta,3,Beverage
+11,Mountain Dew,2,Beverage
+12,Gatorade,2,Beverage
+13,Salad,13,Food
+14,Pasta,12,Food
+15,Fanta,5,Beverage
+16,Red Bull,1,Beverage
+17,Mountain Dew,1,Beverage
+18,Gatorade,4,Beverage
+19,7UP,4,Beverage
+20,Dr. Pepper,5,Beverage
+21,Sprite,4,Beverage
+22,Pepsi,4,Beverage
+23,Monster,2,Beverage
+24,7UP,1,Beverage
+25,7UP,2,Beverage
+26,Salad,6,Food
+27,Dr. Pepper,2,Beverage
+28,Gatorade,1,Beverage
+29,Curry,14,Food
+30,Pepsi,5,Beverage
+31,Monster,2,Beverage
+32,Pepsi,3,Beverage
+33,Curry,13,Food
+34,Pizza,15,Food
+35,Sandwich Coke,13,Food
+36,Mountain Dew,1,Beverage
+37,Sprite,3,Beverage
+38,Dr. Pepper,2,Beverage
+39,Gatorade,1,Beverage
+40,Salad,12,Food
+41,Monster,4,Beverage
+42,Mountain Dew,4,Beverage
+43,Pepsi,4,Beverage
+44,Fanta,1,Beverage
+45,Monster,2,Beverage
+46,Ramen,10,Food
+47,Red Bull,4,Beverage
+48,Pepsi,1,Beverage
+49,7UP,2,Beverage
+50,Fanta,4,Beverage
