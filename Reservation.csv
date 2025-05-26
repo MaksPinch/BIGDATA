@@ -1,4 +1,4 @@
-ReservationID,CustomerID,TableNumber,ReservationDate,reservation_time
+reservationID,customerid,tablenumber,reservationdate,reservation_time
 1,1,5,10/27/2023,3:57 PM
 2,2,12,11/16/2022,4:20 AM
 3,3,7,3/3/2024,8:05 PM

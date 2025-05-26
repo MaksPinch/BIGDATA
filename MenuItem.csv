@@ -1,4 +1,4 @@
-MenuItemID,ItemName,Price,Category
+menuitemid,itemname,price,category
 1,7UP,2,Beverage
 2,Fanta,5,Beverage
 3,Burger,12,Food

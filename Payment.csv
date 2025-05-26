@@ -1,4 +1,4 @@
-PaymentID,OrderID,PaymentDate,Amount,PaymentMethod
+paymentid,orderid,paymentdate,amount,paymentmethod
 1,1,28/3/2024,408,Cash
 2,2,13/3/2024,315,Cash
 3,3,15/9/2025,75,Card

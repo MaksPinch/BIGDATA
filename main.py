@@ -4,9 +4,8 @@ file_path_customer = 'Customer.csv'
 
 with psycopg2.connect(database="BIGdata", user="postgres", password="130006") as conn:
     with conn.cursor() as cur:
-        # удаление таблиц
         cur.execute("""
-        DROP TABLE customer, staff;
+        DROP TABLE customer, staff, menuitem;
         
         """)
 
@@ -51,8 +50,36 @@ with psycopg2.connect(database="BIGdata", user="postgres", password="130006") as
 
         conn.commit()
 
+
+
         cur.execute("""
             SELECT * FROM staff;
         """)
 
         print(cur.fetchall())
+
+
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS menuitem (
+                menuitemid INT PRIMARY KEY,
+                itemname VARCHAR(100) NOT NULL,
+                price NUMERIC(10, 2) NOT NULL,
+                category VARCHAR(100) NOT NULL
+            );
+        """)
+
+        conn.commit()
+
+        with open ('MenuItem.csv', 'r', encoding='utf-8') as f:
+            next(f)
+            cur.copy_from(f, 'menuitem', sep=',', columns=('menuitemid', 'itemname', 'price', 'category'))
+
+
+        conn.commit()
+
+        cur.execute("""
+            SELECT * FROM menuitem;
+        """)
+
+        print(cur.fetchall())
+
