@@ -12,7 +12,7 @@ file_path_reservation = 'Updated_Reservation_csv.csv'
 with psycopg2.connect(database="BIGdata", user="postgres", password='130006') as conn:
     with conn.cursor() as cur:
         cur.execute("""
-        DROP TABLE customer, staff, menu_item, orders, order_item, payment,;
+        DROP TABLE customer, staff, menu_item, orders, payment, order_item;
 
         """)
 
@@ -51,9 +51,9 @@ with psycopg2.connect(database="BIGdata", user="postgres", password='130006') as
 
         conn.commit()
 
-        with open('Staff.csv', 'r', encoding='utf-8') as f:
+        with open(file_path_staff, 'r', encoding='utf-8') as f:
             next(f)
-            cur.copy_from(f, 'staff', sep=',', columns=('staffid', 'name', 'role', 'phone'))
+            cur.copy_from(f, 'staff', sep=',', columns=('staff_id', 'name', 'role', 'phone'))
 
         conn.commit()
 
@@ -77,7 +77,7 @@ with psycopg2.connect(database="BIGdata", user="postgres", password='130006') as
 
         conn.commit()
 
-        with open ('MenuItem.csv', 'r', encoding='utf-8') as f:
+        with open (file_path_menuitem, 'r', encoding='utf-8') as f:
             next(f)
             cur.copy_from(f, 'menu_item', sep=',', columns=('menu_item_id', 'item_name', 'price', 'category'))
 
@@ -105,14 +105,14 @@ with psycopg2.connect(database="BIGdata", user="postgres", password='130006') as
 
         conn.commit()
 
-        with open('Order.csv', 'r', encoding='utf-8') as f:
+        with open(file_path_orders, 'r', encoding='utf-8') as f:
             next(f)
-            cur.copy_from(f, 'order', sep=',', columns=('order_id', 'order_date', 'order_type', 'customer_id', 'staff_id'))
+            cur.copy_from(f, 'orders', sep=',', columns=('order_id', 'order_date', 'order_type', 'customer_id', 'staff_id'))
 
         conn.commit()
 
         cur.execute("""
-                   SELECT * FROM order;
+                   SELECT * FROM orders;
                """)
 
         print(cur.fetchall())
@@ -123,16 +123,16 @@ with psycopg2.connect(database="BIGdata", user="postgres", password='130006') as
                         order_id INT,
                         menu_item_id INT,
                         quantity INT CHECK (quantity > 0),
-                        FOREIGN KEY (order_id) REFERENCES order(order_id),
-                        FOREIGN KEY (menu_item_id) REFERENCES menu_item(menu_item_id),
+                        FOREIGN KEY (order_id) REFERENCES orders(order_id),
+                        FOREIGN KEY (menu_item_id) REFERENCES menu_item(menu_item_id)
                     );
                 """)
 
         conn.commit()
 
-        with open('OrderItem.csv', 'r', encoding='utf-8') as f:
+        with open(file_path_orderitme, 'r', encoding='utf-8') as f:
             next(f)
-            cur.copy_from(f, 'order_item', sep=',', columns=('order_itemid', 'order_id', 'menu_item_id', 'quantity'))
+            cur.copy_from(f, 'order_item', sep=',', columns=('order_item_id', 'order_id', 'menu_item_id', 'quantity'))
 
         conn.commit()
 
@@ -145,17 +145,19 @@ with psycopg2.connect(database="BIGdata", user="postgres", password='130006') as
         cur.execute("""
                     CREATE TABLE IF NOT EXISTS payment (
                         payment_id INT PRIMARY KEY,
+                        order_id INT,
                         payment_date DATE,
                         amount INT NOT NULL,
-                        payment_method VARCHAR(20) NOT NULL
+                        payment_method VARCHAR(20) NOT NULL,
+                        FOREIGN KEY (order_id) REFERENCES orders(order_id)
                     );
                 """)
 
         conn.commit()
 
-        with open('Payment.csv', 'r', encoding='utf-8') as f:
+        with open(file_path_payment, 'r', encoding='utf-8') as f:
             next(f)
-            cur.copy_from(f, 'payment', sep=',', columns=('payment_id', 'payment_date', 'amount', 'payment_method'))
+            cur.copy_from(f, 'payment', sep=',', columns=('payment_id', 'order_id', 'payment_date', 'amount', 'payment_method'))
 
         conn.commit()
 
@@ -165,18 +167,29 @@ with psycopg2.connect(database="BIGdata", user="postgres", password='130006') as
 
         print(cur.fetchall())
 
-        cur.exectue("""
+        cur.execute("""
             CREATE TABLE IF NOT EXISTS reservation (
                 reservation_id INT PRIMARY KEY,
                 customer_id INT,
                 table_number INT NOT NULL, 
                 reservation_date DATE,
                 reservation_time TIME
+            );
         """)
 
         conn.commit()
 
-        with open('', 'r', encoding='utf-8') as f:
+        with open(file_path_reservation, 'r', encoding='utf-8') as f:
             next(f)
-            cur.copy(f, )
+
+            cur.copy_from(f, 'reservation', sep=',', columns=('reservation_id', 'customer_id', 'table_number', 'reservation_date', 'reservation_time'))
+
+        conn.commit()
+
+
+        cur.execute("""
+            SELECT * FROM reservation;
+        """)
+
+        print(cur.fetchall())
 
