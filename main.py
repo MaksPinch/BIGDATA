@@ -83,3 +83,74 @@ with psycopg2.connect(database="BIGdata", user="postgres", password='130006') as
 
         print(cur.fetchall())
 
+        cur.execute("""
+                   CREATE TABLE IF NOT EXISTS order (
+                       orderid INT PRIMARY KEY,
+                       orderdate VARCHAR(100) NOT NULL,
+                       ordertype VARCHAR(100) NOT NULL,
+                       customerid INT,
+                       staffid INT,
+
+                   );
+               """)
+
+        conn.commit()
+
+        with open('Order.csv', 'r', encoding='utf-8') as f:
+            next(f)
+            cur.copy_from(f, 'order', sep=',', columns=('orderid', 'orderdate', 'ordertype', 'customerid', 'staffid'))
+
+        conn.commit()
+
+        cur.execute("""
+                   SELECT * FROM order;
+               """)
+
+        print(cur.fetchall())
+
+        cur.execute("""
+                    CREATE TABLE IF NOT EXISTS orderitem (
+                        orderitemid INT PRIMARY KEY,
+                        orderid INT,
+                        menuitemid INT,
+                        quantity INT CHECK (quantity > 0)
+                    );
+                """)
+
+        conn.commit()
+
+        with open('OrderItem.csv', 'r', encoding='utf-8') as f:
+            next(f)
+            cur.copy_from(f, 'orderitem', sep=',', columns=('orderitemid', 'orderid', 'menuitemid', 'quantity'))
+
+        conn.commit()
+
+        cur.execute("""
+                    SELECT * FROM orderitem;
+                """)
+
+        print(cur.fetchall())
+
+        cur.execute("""
+                    CREATE TABLE IF NOT EXISTS payment (
+                        paymentid INT PRIMARY KEY,
+                        paymentdate VARCHAR(20) NOT NULL,
+                        amount INT NOT NULL,
+                        paymentmethod VARCHAR(20) NOT NULL
+                    );
+                """)
+
+        conn.commit()
+
+        with open('Payment.csv', 'r', encoding='utf-8') as f:
+            next(f)
+            cur.copy_from(f, 'payment', sep=',', columns=('paymentid', 'paymentdate', 'amount', 'paymentmethod'))
+
+        conn.commit()
+
+        cur.execute("""
+                    SELECT * FROM payment;
+                """)
+
+        print(cur.fetchall())
+
