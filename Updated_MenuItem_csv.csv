@@ -1,4 +1,4 @@
-menuitemid,itemname,price,category
+menu_item_id,item_name,price,category
 1,7UP,2,Beverage
 2,Fanta,5,Beverage
 3,Burger,12,Food

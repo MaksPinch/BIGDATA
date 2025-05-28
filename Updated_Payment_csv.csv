@@ -1,4 +1,4 @@
-paymentid,orderid,paymentdate,amount,paymentmethod
+payment_id,order_id,payment_date,amount,payment_method
 1,1,2024-12-29,408,Cash
 2,2,2025-08-27,315,Cash
 3,3,2025-07-16,75,Card

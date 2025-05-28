@@ -1,11 +1,18 @@
 import psycopg2
 
-file_path_customer = 'Customer.csv'
+file_path_customer = 'Updated_Customer_csv.csv'
+file_path_staff = 'Updated_Staff_csv.csv'
+file_path_menuitem = 'Updated_MenuItem_csv.csv'
+file_path_orders = 'Updated_Order_csv.csv'
+file_path_orderitme = 'Updated_OrderItem_csv.csv'
+file_path_payment = 'Updated_Payment_csv.csv'
+file_path_reservation = 'Updated_Reservation_csv.csv'
+
 
 with psycopg2.connect(database="BIGdata", user="postgres", password='130006') as conn:
     with conn.cursor() as cur:
         cur.execute("""
-        DROP TABLE customer, staff, menuitem;
+        DROP TABLE customer, staff, menu_item, orders, order_item, payment,;
 
         """)
 
@@ -46,7 +53,7 @@ with psycopg2.connect(database="BIGdata", user="postgres", password='130006') as
 
         with open('Staff.csv', 'r', encoding='utf-8') as f:
             next(f)
-            cur.copy_from(f, 'staff', sep=',', columns=('staff_id', 'name', 'role', 'phone'))
+            cur.copy_from(f, 'staff', sep=',', columns=('staffid', 'name', 'role', 'phone'))
 
         conn.commit()
 
@@ -60,9 +67,9 @@ with psycopg2.connect(database="BIGdata", user="postgres", password='130006') as
 
 
         cur.execute("""
-            CREATE TABLE IF NOT EXISTS menuitem (
-                menuitem_id INT PRIMARY KEY,
-                itemname VARCHAR(100) NOT NULL,
+            CREATE TABLE IF NOT EXISTS menu_item (
+                menu_item_id INT PRIMARY KEY,
+                item_name VARCHAR(100) NOT NULL,
                 price NUMERIC(10, 2) NOT NULL,
                 category VARCHAR(100) NOT NULL
             );
@@ -72,24 +79,26 @@ with psycopg2.connect(database="BIGdata", user="postgres", password='130006') as
 
         with open ('MenuItem.csv', 'r', encoding='utf-8') as f:
             next(f)
-            cur.copy_from(f, 'menuitem', sep=',', columns=('menuitem_id', 'itemname', 'price', 'category'))
+            cur.copy_from(f, 'menu_item', sep=',', columns=('menu_item_id', 'item_name', 'price', 'category'))
 
 
         conn.commit()
 
         cur.execute("""
-            SELECT * FROM menuitem;
+            SELECT * FROM menu_item;
         """)
 
         print(cur.fetchall())
 
         cur.execute("""
-                   CREATE TABLE IF NOT EXISTS order (
-                       orderid INT PRIMARY KEY,
-                       orderdate VARCHAR(100) NOT NULL,
-                       ordertype VARCHAR(100) NOT NULL,
-                       customerid INT,
-                       staffid INT,
+                   CREATE TABLE IF NOT EXISTS orders (
+                       order_id INT PRIMARY KEY,
+                       order_date VARCHAR(100) NOT NULL,
+                       order_type VARCHAR(100) NOT NULL,
+                       customer_id INT,
+                       staff_id INT,
+                       FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
+                       FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
 
                    );
                """)
@@ -98,7 +107,7 @@ with psycopg2.connect(database="BIGdata", user="postgres", password='130006') as
 
         with open('Order.csv', 'r', encoding='utf-8') as f:
             next(f)
-            cur.copy_from(f, 'order', sep=',', columns=('orderid', 'orderdate', 'ordertype', 'customerid', 'staffid'))
+            cur.copy_from(f, 'order', sep=',', columns=('order_id', 'order_date', 'order_type', 'customer_id', 'staff_id'))
 
         conn.commit()
 
@@ -109,11 +118,13 @@ with psycopg2.connect(database="BIGdata", user="postgres", password='130006') as
         print(cur.fetchall())
 
         cur.execute("""
-                    CREATE TABLE IF NOT EXISTS orderitem (
-                        orderitemid INT PRIMARY KEY,
-                        orderid INT,
-                        menuitemid INT,
-                        quantity INT CHECK (quantity > 0)
+                    CREATE TABLE IF NOT EXISTS order_item (
+                        order_item_id INT PRIMARY KEY,
+                        order_id INT,
+                        menu_item_id INT,
+                        quantity INT CHECK (quantity > 0),
+                        FOREIGN KEY (order_id) REFERENCES order(order_id),
+                        FOREIGN KEY (menu_item_id) REFERENCES menu_item(menu_item_id),
                     );
                 """)
 
@@ -121,22 +132,22 @@ with psycopg2.connect(database="BIGdata", user="postgres", password='130006') as
 
         with open('OrderItem.csv', 'r', encoding='utf-8') as f:
             next(f)
-            cur.copy_from(f, 'orderitem', sep=',', columns=('orderitemid', 'orderid', 'menuitemid', 'quantity'))
+            cur.copy_from(f, 'order_item', sep=',', columns=('order_itemid', 'order_id', 'menu_item_id', 'quantity'))
 
         conn.commit()
 
         cur.execute("""
-                    SELECT * FROM orderitem;
+                    SELECT * FROM order_item;
                 """)
 
         print(cur.fetchall())
 
         cur.execute("""
                     CREATE TABLE IF NOT EXISTS payment (
-                        paymentid INT PRIMARY KEY,
-                        paymentdate VARCHAR(20) NOT NULL,
+                        payment_id INT PRIMARY KEY,
+                        payment_date DATE,
                         amount INT NOT NULL,
-                        paymentmethod VARCHAR(20) NOT NULL
+                        payment_method VARCHAR(20) NOT NULL
                     );
                 """)
 
@@ -144,7 +155,7 @@ with psycopg2.connect(database="BIGdata", user="postgres", password='130006') as
 
         with open('Payment.csv', 'r', encoding='utf-8') as f:
             next(f)
-            cur.copy_from(f, 'payment', sep=',', columns=('paymentid', 'paymentdate', 'amount', 'paymentmethod'))
+            cur.copy_from(f, 'payment', sep=',', columns=('payment_id', 'payment_date', 'amount', 'payment_method'))
 
         conn.commit()
 
@@ -153,4 +164,19 @@ with psycopg2.connect(database="BIGdata", user="postgres", password='130006') as
                 """)
 
         print(cur.fetchall())
+
+        cur.exectue("""
+            CREATE TABLE IF NOT EXISTS reservation (
+                reservation_id INT PRIMARY KEY,
+                customer_id INT,
+                table_number INT NOT NULL, 
+                reservation_date DATE,
+                reservation_time TIME
+        """)
+
+        conn.commit()
+
+        with open('', 'r', encoding='utf-8') as f:
+            next(f)
+            cur.copy(f, )
 

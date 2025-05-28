@@ -1,4 +1,4 @@
-orderitemid,orderid,menuitemid,quantity
+order_item_id,order_id,menu_item_id,quantity
 1,1,1,5
 2,2,2,4
 3,3,3,1
